@@ -1,0 +1,69 @@
+#keyword {
+    padding: 10px;
+    height: 50px;
+	width: 500px;
+	font-size: 2em;
+    border: 1px transparent grey;
+    font-family: Century Gothic;
+    font-weight: bold;
+}
+
+#results {
+    text-align: left;
+    width: 500px;
+    margin-left: 432px;
+	border: 1px solid #c0c0c0;
+    background-color: rgba(255, 255, 255, 0.53);
+}
+
+#results .item {
+	padding: 5px;
+	font-family: Century Gothic;
+    font-weight: bold;
+}
+
+#results .item:last-child {
+	border-bottom: 0px;
+}
+
+#results .item:hover {
+	background-color: #f2f2f2;
+}
+#main {
+    margin-top: 65px;
+    width: 100%;
+    text-align: center;
+}
+
+#logo {
+    font-size: 7em;
+    font-family: Andalus;
+}
+
+img {
+    height: 100px;
+    width: 100px;
+}
+body {
+    background-image: url("bg.jpg");
+    background-size: cover;
+}
+#trends {
+    float: right;
+    position: sticky;
+    margin-right: 10px;
+    width: 200px;
+    margin-top: -250px;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+#username {
+    margin-right: 10px;
+}
+
+
+
+#in {
+    max-height: 20px;
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>A Novel Query Auto Completion</title>
+    <script src="jquery-2.1.3.min.js"></script>
+    <script src="auto-complete.js"></script>
+    <script src="fb.js"></script>
+    <script src="cookie.js"></script>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" type="image/png" href="search.png" />
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/modernizr-2.6.2.min.js"></script>
+    <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
+    <script src="bootstrap/js/disablesubmit.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bootstrap/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="bootstrap/css/style.css" />
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!--<div class="navbar-header">
+                <a class="navbar-brand" href="#"><b>nQAC</b></a>
+            </div>-->
+            <center>
+                <div class="navbar-collapse collapse" id="navbar-main">
+                    <div class="navbar-form navbar-left">
+                        <button id="fetchtrends" type="button" class="btn red btn-primary">Fetch Trends</button>
+
+                    </div>
+                    <div class="navbar-form navbar-right" id="in">
+                        <div class="form-group" id="username">User Name</div>
+                        <img id="profilepic"></img>
+                        <button id="showLikes" type="button" class="btn btn-primary" onclick="getLikes()">Show Likes</button>
+                        <button type="button" class="btn btn-primary" onclick="Logout()">Logout</button>
+                    </div>
+                    <form class="navbar-form navbar-right" id="notin">
+                        <button type="button" class="btn btn-primary" onclick="Login()">Login with Facebook</button>
+                    </form>
+
+                </div>
+            </center>
+        </div>
+
+    </div>
+
+    <!-- LOGO AND SEARCH BAR WITH RESULTS -->
+
+    <div id="main">
+        <img src="search.png" />
+        <div id="logo">Novel QAC</div>
+        <input type="text" value="" placeholder="Search" id="keyword" />
+        <div id="results">
+        </div>
+    </div>
+
+    <!-- POP UP LOGIN STARTS FROM HERE -->
+
+    <!--
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header login_modal_header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id="myModalLabel">Login to Your Account</h2>
+                </div>
+                <div class="modal-body login-modal">
+                    <p>Please enter your valid username and password OR Login with Social Networks.</p>
+                    <br/>
+                    <div class="clearfix"></div>
+                    <div id='social-icons-conatainer'>
+                        <div class='modal-body-left'>
+                            <div class="form-group">
+                                <input type="text" id="username" placeholder="Enter your name" value="" class="form-control login-field">
+                                <i class="fa fa-user login-field-icon"></i>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" id="login-pass" placeholder="Password" value="" class="form-control login-field">
+                                <i class="fa fa-lock login-field-icon"></i>
+                            </div>
+
+                            <a href="#" class="btn btn-success modal-login-btn">Login</a>
+                            <a href="#" class="login-link text-center">Forget password?</a>
+                            <!--registration button is used here for using the better look and class is replaced with the login button 
+                            <button class="btn btn-success modal-login-btn" data-toggle="modal" data-target="#register-modal">New User</button>
+                        </div>
+
+                        <div class='modal-body-right'>
+                            <div class="modal-social-icons">
+                                <a href='fb_login.php' class="btn btn-default facebook"> <i class="fa fa-facebook modal-icons"></i> Sign In with Facebook</a>
+                                <a href='#' class="btn btn-default twitter"> <i class="fa fa-twitter modal-icons"></i> Sign In with Twitter</a>
+                                <a href='#' class="btn btn-default google"> <i class="fa fa-google-plus modal-icons"></i> Sign In with Google</a>
+                                <a href='#' class="btn btn-default linkedin"> <i class="fa fa-linkedin modal-icons"></i> Sign In with Linkedin</a>
+                            </div>
+                        </div>
+                        <div id='center-line'>OR</div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+                <div class="clearfix"></div>
+                <div class="modal-footer login_modal_footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- USER REGISTRATION FORM ->
+
+
+
+    <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header login_modal_header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id="myModalLabel">New User Registration</h2>
+                </div>
+                <div class="modal-body login-modal">
+                    <p>Please provide the valid information.</p>
+                    <br/>
+                    <div class="clearfix"></div>
+                    <div class="form-group">
+                        <form action="connection.php" method="post" onload="disableSubmit()">
+                            Name
+                            <input type="text" name="fullname" placeholder="Enter Your Full Name" value="" class="form-control login-field">
+                            <br>Email
+                            <input type="email" name="email" placeholder="Enter valid email address" value="" class="form-control login-field">
+                            <br>Confirm Email
+                            <input type="email" name="confirm-email" placeholder="Confirm email address" value="" class="form-control login-field">
+                            <br>
+                            <select name="sex" class="form-control login-field">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <br>Date of Birth
+                            <input type="date" name="dateofbirth" placeholder="Date Of Birth" value="" class="form-control login-field">
+                            <br>User Name
+                            <input type="text" name="username" placeholder="Enter a username" value="" class="form-control login-field">
+                            <br>Password
+                            <input type="password" name="password" placeholder="Enter a password" value="" class="form-control login-field">
+                            <br>Confirm Password
+                            <input type="password" name="confirm-password" placeholder="Confirm password" value="" class="form-control login-field">
+                            <br>
+                            <input type="checkbox" name="confirm" value="" onchange="activateButton(this)">Agree with Terms and Conditions.
+                            <button class="btn btn-success modal-login-btn" data-toggle="modal" type="submit" value="" name="submit">Submit</button>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+-->
+</body>
+
+</html>
+
+
+
+
+
+
